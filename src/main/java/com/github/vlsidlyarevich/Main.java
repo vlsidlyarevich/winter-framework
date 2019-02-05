@@ -1,4 +1,4 @@
-package com.github.vlsidlyarevich.winter_framework;
+package com.github.vlsidlyarevich;
 
 public class Main {
 
