@@ -1,8 +1,11 @@
 package com.github.vlsidlyarevich;
 
+import com.github.vlsidlyarevich.winterframework.beans.factory.BeanFactory;
+
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        BeanFactory factory = new BeanFactory();
+        factory.init("com.github.vlsidlyarevich.test");
     }
 }
