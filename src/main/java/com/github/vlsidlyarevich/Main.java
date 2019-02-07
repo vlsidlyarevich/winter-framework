@@ -2,6 +2,9 @@ package com.github.vlsidlyarevich;
 
 import com.github.vlsidlyarevich.winterframework.beans.factory.BeanFactory;
 
+/**
+ * Bootstrap application class, starting the general application context factory.
+ */
 public class Main {
 
     public static void main(String[] args) {
