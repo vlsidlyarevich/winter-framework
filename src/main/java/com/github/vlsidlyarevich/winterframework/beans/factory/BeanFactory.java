@@ -14,7 +14,7 @@ public class BeanFactory {
         final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         assert classLoader != null;
         try {
-            var resources = classLoader.getResources(path.replace(".", "/"));
+            final var resources = classLoader.getResources(path.replace(".", "/"));
             resources.asIterator().forEachRemaining(url -> {
 
 
