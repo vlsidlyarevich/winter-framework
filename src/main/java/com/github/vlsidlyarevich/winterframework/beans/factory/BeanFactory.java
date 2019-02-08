@@ -1,7 +1,11 @@
 package com.github.vlsidlyarevich.winterframework.beans.factory;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class BeanFactory {
@@ -15,13 +19,18 @@ public class BeanFactory {
         assert classLoader != null;
         try {
             var resources = classLoader.getResources(path.replace(".", "/"));
-            resources.asIterator().forEachRemaining(url -> {
+            while (resources.hasMoreElements()) {
+                final URL resource = resources.nextElement();
+                File file = new File(resource.toURI());
+                for (File classFile : Objects.requireNonNull(file.listFiles())) {
+                    if (classFile.getName().endsWith(".class")) {
+                        String className = classFile.getName().replace(".class", "");
 
+                    }
+                }
+            }
 
-            });
-
-
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
 
