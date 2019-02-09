@@ -1,5 +1,6 @@
 package com.github.vlsidlyarevich.test;
 
+import com.github.vlsidlyarevich.test.repository.RepositoryBean;
 import com.github.vlsidlyarevich.winterframework.stereotype.Component;
 
 @Component

@@ -1,4 +1,4 @@
-package com.github.vlsidlyarevich.test;
+package com.github.vlsidlyarevich.test.repository;
 
 import com.github.vlsidlyarevich.winterframework.stereotype.Repository;
 
