@@ -1,11 +1,10 @@
 package com.github.vlsidlyarevich.winterframework.beans.factory;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
+import com.github.vlsidlyarevich.winterframework.beans.factory.support.ClassScanException;
+import com.github.vlsidlyarevich.winterframework.beans.factory.support.PathScanningClassesProvider;
+import com.github.vlsidlyarevich.winterframework.stereotype.Component;
+import com.github.vlsidlyarevich.winterframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,27 +14,21 @@ public class BeanFactory {
     //TODO maybe registry?
     private final Map<String, Object> singletons = new ConcurrentHashMap<>();
 
-    //TODO separate class scan logic into scanner
     public void init(final String path) {
-        final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        assert classLoader != null;
+        final PathScanningClassesProvider classesProvider = new PathScanningClassesProvider();
+        List<Class> classes;
         try {
-            var resources = classLoader.getResources(path.replace(".", "/"));
-            final List<String> classNames = new ArrayList<>();
-            while (resources.hasMoreElements()) {
-                final URL resource = resources.nextElement();
-                var fileVisitor = new FullClassPathMemorizingFileVisitor(path);
-                Files.walkFileTree(Path.of(resource.toURI()), fileVisitor);
-                classNames.addAll(fileVisitor.getFullClassPaths());
-            }
+            classes = classesProvider.provideClassesForPath(path);
+            //TODO filter approach?
+            classes.forEach(clazz -> {
+                if (clazz.isAnnotationPresent(Component.class) || clazz.isAnnotationPresent(Repository.class)) {
+                    Object instance = clazz.newInstance()
+                }
+            });
 
-
-
-
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
+        } catch (ClassScanException e) {
+            throw new BeanFactoryInitializationException(e);
         }
-
 
     }
 

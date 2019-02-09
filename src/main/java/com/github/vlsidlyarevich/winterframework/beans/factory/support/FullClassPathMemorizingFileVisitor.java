@@ -1,4 +1,4 @@
-package com.github.vlsidlyarevich.winterframework.beans.factory;
+package com.github.vlsidlyarevich.winterframework.beans.factory.support;
 
 import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
