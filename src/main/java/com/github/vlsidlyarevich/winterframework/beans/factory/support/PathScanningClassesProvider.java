@@ -10,9 +10,9 @@ import java.util.List;
 
 public class PathScanningClassesProvider {
 
-    public List<Class> provideClassesForPath(final String path) {
+    public List<Class<?>> provideClassesForPath(final String path) {
         final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        final List<Class> result = new ArrayList<>();
+        final List<Class<?>> result = new ArrayList<>();
         assert classLoader != null;
         try {
             var resources = classLoader.getResources(path.replace(".", "/"));
@@ -25,8 +25,7 @@ public class PathScanningClassesProvider {
             }
 
             for (String p : fullClassPaths) {
-                String replace = p.replace(".class", "");
-                Class<?> clazz = Class.forName(replace);
+                Class<?> clazz = Class.forName(convertPathForClassFetch(p));
                 result.add(clazz);
             }
 
@@ -35,5 +34,10 @@ public class PathScanningClassesProvider {
         }
 
         return result;
+    }
+
+    private String convertPathForClassFetch(final String fullClassPath) {
+        String pathWithoutPostfix = ClassNameUtils.removePostfix(fullClassPath);
+        return ClassNameUtils.convertToPackagedPath(pathWithoutPostfix);
     }
 }

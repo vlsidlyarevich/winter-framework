@@ -16,13 +16,18 @@ public class BeanFactory {
 
     public void init(final String path) {
         final PathScanningClassesProvider classesProvider = new PathScanningClassesProvider();
-        List<Class> classes;
+        List<Class<?>> classes;
         try {
             classes = classesProvider.provideClassesForPath(path);
             //TODO filter approach?
             classes.forEach(clazz -> {
                 if (clazz.isAnnotationPresent(Component.class) || clazz.isAnnotationPresent(Repository.class)) {
-                    Object instance = clazz.newInstance()
+                    try {
+                        Object instance = clazz.getDeclaredConstructor().newInstance();
+                        this.singletons.put(clazz.getSimpleName(), instance);
+                    } catch (ReflectiveOperationException e) {
+                        throw new BeanCreationException(e);
+                    }
                 }
             });
 
