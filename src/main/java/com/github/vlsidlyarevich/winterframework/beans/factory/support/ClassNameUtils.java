@@ -13,4 +13,8 @@ public interface ClassNameUtils {
     static String convertToPackagedPath(final String path) {
         return path.replaceAll(PATH_SEPARATOR, PACKAGE_SEPARATOR);
     }
+
+    static String convertToBeanName(final String className) {
+        return className.substring(0, 1).toLowerCase() + className.substring(1);
+    }
 }

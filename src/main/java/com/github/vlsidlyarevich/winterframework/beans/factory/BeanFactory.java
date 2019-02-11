@@ -1,5 +1,6 @@
 package com.github.vlsidlyarevich.winterframework.beans.factory;
 
+import com.github.vlsidlyarevich.winterframework.beans.factory.support.ClassNameUtils;
 import com.github.vlsidlyarevich.winterframework.beans.factory.support.ClassScanException;
 import com.github.vlsidlyarevich.winterframework.beans.factory.support.PathScanningClassesProvider;
 import com.github.vlsidlyarevich.winterframework.stereotype.Component;
@@ -24,7 +25,7 @@ public class BeanFactory {
                 if (clazz.isAnnotationPresent(Component.class) || clazz.isAnnotationPresent(Repository.class)) {
                     try {
                         Object instance = clazz.getDeclaredConstructor().newInstance();
-                        this.singletons.put(clazz.getSimpleName(), instance);
+                        this.singletons.put(ClassNameUtils.convertToBeanName(clazz.getSimpleName()), instance);
                     } catch (ReflectiveOperationException e) {
                         throw new BeanCreationException(e);
                     }
