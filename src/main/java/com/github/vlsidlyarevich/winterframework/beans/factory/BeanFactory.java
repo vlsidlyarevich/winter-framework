@@ -7,7 +7,9 @@ import com.github.vlsidlyarevich.winterframework.beans.factory.support.PathScann
 import com.github.vlsidlyarevich.winterframework.stereotype.Component;
 import com.github.vlsidlyarevich.winterframework.stereotype.Repository;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -48,11 +50,21 @@ public class BeanFactory {
         singletons.forEach((k, s) -> {
             for (Method method : s.getClass().getMethods()) {
                 if (!method.isAnnotationPresent(Autowired.class)) continue;
-                for (Class<?> clazz : method.getParameterTypes()) {
+                if (method.getParameterCount() != 1) continue;
+                if (!Modifier.isPublic(method.getModifiers())) continue;
 
+                Class<?> clazz = method.getParameterTypes()[0];
+                Object toInject = singletonClasses.get(clazz);
+                if (toInject == null) {
+                    throw new BeanInstantiationException("Could not find autowire candidate for class: " + clazz);
+                }
+
+                try {
+                    method.invoke(toInject);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    throw new BeanInstantiationException(e);
                 }
             }
-
         });
     }
 
