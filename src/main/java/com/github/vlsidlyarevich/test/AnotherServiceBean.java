@@ -6,12 +6,8 @@ import com.github.vlsidlyarevich.winterframework.stereotype.Component;
 @Component
 public class AnotherServiceBean {
 
-    private final ServiceBean serviceBean;
-
     @Autowired
-    public AnotherServiceBean(ServiceBean serviceBean) {
-        this.serviceBean = serviceBean;
-    }
+    private ServiceBean serviceBean;
 
     public void callMethod() {
         System.out.println(this.getClass().getSimpleName() + " is called");
