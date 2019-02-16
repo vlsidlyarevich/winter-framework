@@ -60,7 +60,7 @@ public class BeanFactory {
                 }
 
                 try {
-                    method.invoke(toInject);
+                    method.invoke(s, toInject);
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     throw new BeanInstantiationException(e);
                 }
