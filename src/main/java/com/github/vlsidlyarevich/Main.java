@@ -1,6 +1,6 @@
 package com.github.vlsidlyarevich;
 
-import com.github.vlsidlyarevich.test.ServiceBean;
+import com.github.vlsidlyarevich.test.AnotherServiceBean;
 import com.github.vlsidlyarevich.winterframework.beans.factory.BeanFactory;
 
 /**
@@ -12,7 +12,7 @@ public class Main {
         BeanFactory factory = new BeanFactory();
         factory.init("com.github.vlsidlyarevich.test");
         factory.populateProperties();
-        ServiceBean bean = (ServiceBean) factory.getBean("serviceBean");
-        System.out.println(bean);
+        AnotherServiceBean bean = (AnotherServiceBean) factory.getBean("anotherServiceBean");
+        bean.callMethod();
     }
 }
