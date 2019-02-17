@@ -52,6 +52,8 @@ public class BeanFactory {
             populateFields(s);
             populateSetters(s);
         });
+        injectBeanNames();
+        injectBeanFactories();
     }
 
     private void populateFields(Object singleton) {
@@ -71,7 +73,6 @@ public class BeanFactory {
                 field.setAccessible(false);
             }
         }
-
     }
 
     private void populateSetters(final Object singleton) {
@@ -90,6 +91,24 @@ public class BeanFactory {
                 method.invoke(singleton, toInject);
             } catch (IllegalAccessException | InvocationTargetException e) {
                 throw new BeanInstantiationException(e);
+            }
+        }
+    }
+
+    private void injectBeanNames() {
+        singletons.keySet().forEach(name -> {
+            Object bean = singletons.get(name);
+            if (bean instanceof BeanNameAware) {
+                ((BeanNameAware) bean).setBeanName(name);
+            }
+        });
+    }
+
+    private void injectBeanFactories() {
+        for (String name : singletons.keySet()) {
+            Object bean = singletons.get(name);
+            if (bean instanceof BeanNameAware) {
+                ((BeanFactoryAware) bean).setBeanFactory(this);
             }
         }
     }
