@@ -54,6 +54,7 @@ public class BeanFactory {
         });
         injectBeanNames();
         injectBeanFactories();
+        afterPropertiesSet();
     }
 
     private void populateFields(Object singleton) {
@@ -107,10 +108,19 @@ public class BeanFactory {
     private void injectBeanFactories() {
         for (String name : singletons.keySet()) {
             Object bean = singletons.get(name);
-            if (bean instanceof BeanNameAware) {
+            if (bean instanceof BeanFactoryAware) {
                 ((BeanFactoryAware) bean).setBeanFactory(this);
             }
         }
+    }
+
+    private void afterPropertiesSet() {
+        singletons.keySet().forEach(name -> {
+            Object bean = singletons.get(name);
+            if (bean instanceof InitializingBean) {
+                ((InitializingBean) bean).afterPropertiesSet();
+            }
+        });
     }
 
     public Object getBean(final String name) {
