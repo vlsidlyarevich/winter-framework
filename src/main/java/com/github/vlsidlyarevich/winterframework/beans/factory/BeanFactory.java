@@ -1,6 +1,7 @@
 package com.github.vlsidlyarevich.winterframework.beans.factory;
 
 import com.github.vlsidlyarevich.winterframework.beans.factory.annotation.Autowired;
+import com.github.vlsidlyarevich.winterframework.beans.factory.config.BeanPostProcessor;
 import com.github.vlsidlyarevich.winterframework.beans.factory.support.ClassNameUtils;
 import com.github.vlsidlyarevich.winterframework.beans.factory.support.ClassScanException;
 import com.github.vlsidlyarevich.winterframework.beans.factory.support.PathScanningClassesProvider;
@@ -11,11 +12,14 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class BeanFactory {
+
+    private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
     //TODO maybe registry?
     private final Map<String, Object> singletons = new ConcurrentHashMap<>();
@@ -48,13 +52,25 @@ public class BeanFactory {
 
     public void populateProperties() {
         System.out.println("==Populating bean properties==");
-        singletons.forEach((k, s) -> {
-            populateFields(s);
-            populateSetters(s);
+        singletons.forEach((name, bean) -> {
+            populateFields(bean);
+            populateSetters(bean);
+
+            injectBeanNames(name, bean);
+
+            injectBeanFactories(bean);
+
+            beanPostProcessors.forEach(bpp -> {
+
+            });
+
+            afterPropertiesSet(bean);
         });
-        injectBeanNames();
-        injectBeanFactories();
-        afterPropertiesSet();
+    }
+
+    public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
+        if (beanPostProcessor == null) throw new BeanFactoryInitializationException("Nullable BeanPostProcessor added");
+        this.beanPostProcessors.add(beanPostProcessor);
     }
 
     private void populateFields(Object singleton) {
@@ -96,31 +112,22 @@ public class BeanFactory {
         }
     }
 
-    private void injectBeanNames() {
-        singletons.keySet().forEach(name -> {
-            Object bean = singletons.get(name);
-            if (bean instanceof BeanNameAware) {
-                ((BeanNameAware) bean).setBeanName(name);
-            }
-        });
-    }
-
-    private void injectBeanFactories() {
-        for (String name : singletons.keySet()) {
-            Object bean = singletons.get(name);
-            if (bean instanceof BeanFactoryAware) {
-                ((BeanFactoryAware) bean).setBeanFactory(this);
-            }
+    private void injectBeanNames(String name, Object bean) {
+        if (bean instanceof BeanNameAware) {
+            ((BeanNameAware) bean).setBeanName(name);
         }
     }
 
-    private void afterPropertiesSet() {
-        singletons.keySet().forEach(name -> {
-            Object bean = singletons.get(name);
-            if (bean instanceof InitializingBean) {
-                ((InitializingBean) bean).afterPropertiesSet();
-            }
-        });
+    private void injectBeanFactories(Object bean) {
+        if (bean instanceof BeanFactoryAware) {
+            ((BeanFactoryAware) bean).setBeanFactory(this);
+        }
+    }
+
+    private void afterPropertiesSet(Object bean) {
+        if (bean instanceof InitializingBean) {
+            ((InitializingBean) bean).afterPropertiesSet();
+        }
     }
 
     public Object getBean(final String name) {
