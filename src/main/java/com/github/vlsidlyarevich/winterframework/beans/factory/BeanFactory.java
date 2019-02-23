@@ -1,5 +1,6 @@
 package com.github.vlsidlyarevich.winterframework.beans.factory;
 
+import com.github.vlsidlyarevich.javax.annotation.PreDestroy;
 import com.github.vlsidlyarevich.winterframework.beans.factory.annotation.Autowired;
 import com.github.vlsidlyarevich.winterframework.beans.factory.config.BeanPostProcessor;
 import com.github.vlsidlyarevich.winterframework.beans.factory.support.ClassNameUtils;
@@ -60,17 +61,39 @@ public class BeanFactory {
 
             injectBeanFactories(bean);
 
-            beanPostProcessors.forEach(bpp -> {
-
-            });
+            beanPostProcessors.forEach(bpp -> bpp.postProcessBeforeInitialization(bean, name));
 
             afterPropertiesSet(bean);
+
+            beanPostProcessors.forEach(bpp -> bpp.postProcessAfterInitialization(bean, name));
+        });
+    }
+
+    public void close() {
+        singletons.forEach((name, bean) -> {
+            for (Method method : bean.getClass().getDeclaredMethods()) {
+                if (!method.isAnnotationPresent(PreDestroy.class)) continue;
+                if (method.getParameterCount() != 0) continue;
+                if (!Modifier.isPublic(method.getModifiers())) continue;
+
+                try {
+                    method.invoke(bean);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    throw new BeanInstantiationException(e);
+                }
+            }
+
+            destroy(bean);
         });
     }
 
     public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
         if (beanPostProcessor == null) throw new BeanFactoryInitializationException("Nullable BeanPostProcessor added");
         this.beanPostProcessors.add(beanPostProcessor);
+    }
+
+    public Object getBean(final String name) {
+        return singletons.get(name);
     }
 
     private void populateFields(Object singleton) {
@@ -130,7 +153,9 @@ public class BeanFactory {
         }
     }
 
-    public Object getBean(final String name) {
-        return singletons.get(name);
+    private void destroy(Object bean) {
+        if (bean instanceof DisposableBean) {
+            ((DisposableBean) bean).destroy();
+        }
     }
 }
