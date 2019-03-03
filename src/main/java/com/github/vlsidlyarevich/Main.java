@@ -1,8 +1,8 @@
 package com.github.vlsidlyarevich;
 
 import com.github.vlsidlyarevich.test.AnotherServiceBean;
-import com.github.vlsidlyarevich.winterframework.beans.factory.BeanFactory;
-import com.github.vlsidlyarevich.winterframework.beans.factory.annotation.PostConstructAnnotationBeanPostProcessor;
+import com.github.vlsidlyarevich.winterframework.context.ApplicationContext;
+import com.github.vlsidlyarevich.winterframework.context.SimpleApplicationContext;
 
 /**
  * Bootstrap application class, starting the general application context factory.
@@ -10,11 +10,8 @@ import com.github.vlsidlyarevich.winterframework.beans.factory.annotation.PostCo
 public class Main {
 
     public static void main(String[] args) {
-        BeanFactory factory = new BeanFactory();
-        factory.addBeanPostProcessor(new PostConstructAnnotationBeanPostProcessor());
-        factory.init("com.github.vlsidlyarevich.test");
-        factory.populateProperties();
-        AnotherServiceBean bean = (AnotherServiceBean) factory.getBean("anotherServiceBean");
+        ApplicationContext context = new SimpleApplicationContext("com.github.vlsidlyarevich.test");
+        AnotherServiceBean bean = (AnotherServiceBean) context.getBean("anotherServiceBean");
         bean.callMethod();
     }
 }
