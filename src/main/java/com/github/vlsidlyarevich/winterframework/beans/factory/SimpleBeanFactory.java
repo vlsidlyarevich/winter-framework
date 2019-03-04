@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class SimpleBeanFactory implements BeanFactory {
+public class SimpleBeanFactory implements StageAwareBeanFactory {
 
     private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
