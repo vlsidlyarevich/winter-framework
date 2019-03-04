@@ -13,5 +13,6 @@ public class Main {
         ApplicationContext context = new SimpleApplicationContext("com.github.vlsidlyarevich.test");
         AnotherServiceBean bean = (AnotherServiceBean) context.getBean("anotherServiceBean");
         bean.callMethod();
+        context.close();
     }
 }
