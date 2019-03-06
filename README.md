@@ -1,12 +1,18 @@
 # Winter Framework
 
-My tryout to create simplified version of Spring Framework core.
+My tryout to create simplified version of Spring Framework core which supports following:
+
+* Classpath scanning for components
+* Multi-staged constructor for components
+* 
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
 ### Prerequisites
+
+The project has no dependencies, it uses only pure java, you don't need to preinstall anything except java.
 
 ``` bash 
 ✗ java -version
@@ -17,51 +23,20 @@ OpenJDK 64-Bit Server VM 18.9 (build 11.0.1+13, mixed mode)
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
+Clone the project and open in your favourite IDE.
 
 End with an example of getting some data out of the system or using it for a little demo
 
-## Running the tests
+## Running
 
-Explain how to run the automated tests for this system
+Just run [Main.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/Main.java) to test framework functionality.
+Several services created fot testing purposes:
 
-### Break down into end to end tests
+[ServiceBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/test/ServiceBean.java) which is annotated with [Component.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/stereotype/Component.java) annotation (which means that it is managed by container)
+and implements [BeanNameAware.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/beans/factory/BeanNameAware.java) callback. 
+Also he demonstrates the setter-based injection (see TODO)
 
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+[]
 
 ## Contributing
 
