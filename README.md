@@ -32,9 +32,15 @@ End with an example of getting some data out of the system or using it for a lit
 Just run [Main.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/Main.java) to test framework functionality.
 Several services created fot testing purposes:
 
-[ServiceBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/test/ServiceBean.java) which is annotated with [Component.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/stereotype/Component.java) annotation (which means that it is managed by container)
+* [ServiceBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/test/ServiceBean.java)
+which is annotated with `@Component` thus managed by container
 and implements [BeanNameAware.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/beans/factory/BeanNameAware.java) callback. 
 Also he demonstrates the setter-based injection (see TODO)
+* [AnotherServiceBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/test/AnotherServiceBean.java)
+which is annotated with `@Component` thus managed by container and implements two callbacks - [InitializingBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/beans/factory/InitializingBean.java)
+and [ApplicationEventListener.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/context/ApplicationEventListener.java).
+Also he has property-based injection, and `@PostConstruct` lifecycle callback.
+* 
 
 []
 
