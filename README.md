@@ -1,6 +1,8 @@
 # Winter Framework
 
-My tryout to create simplified version of Spring Framework core for **EDUCATIONAL PURPOSES ONLY**.
+My tryout to create simplified version of Spring Framework core for educational purposes.
+
+I was inspired by [this article](https://habr.com/ru/post/419679/). 
 
 ## Supported features
 
@@ -40,38 +42,41 @@ Just run [Main.java](https://github.com/vlsidlyarevich/winter-framework/blob/mas
 Several services created fot testing purposes:
 
 * [ServiceBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/test/ServiceBean.java)
-which is annotated with `@Component` thus managed by container
-and implements [BeanNameAware.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/beans/factory/BeanNameAware.java) callback. 
+which is managed by container and implements [BeanNameAware.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/beans/factory/BeanNameAware.java) callback. 
 Also he demonstrates the setter-based injection (see TODO)
 * [AnotherServiceBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/test/AnotherServiceBean.java)
-which is annotated with `@Component` thus managed by container and implements two callbacks - [InitializingBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/beans/factory/InitializingBean.java)
+which is managed by container and implements two callbacks - [InitializingBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/beans/factory/InitializingBean.java)
 and [ApplicationEventListener.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/context/ApplicationEventListener.java).
 Also he has property-based injection, and `@PostConstruct` lifecycle callback.
-* []
+* [FirstRepositoryBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/test/repository/FirstRepositoryBean.java)
+which is managed by container and implements [BeanFactoryAware.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/beans/factory/BeanFactoryAware.java)
+callback
 
-[]
+These testing classes are designed to demonstrate all features and provide following console output:
+```
+==Initializing bean factory==
+==Populating bean properties==
+@PostConstruct is called in AnotherServiceBean
+com.github.vlsidlyarevich.test.ServiceBean@5b275dab is set
+AnotherServiceBean is called
+serviceBean is called
+FirstRepositoryBean is called
+com.github.vlsidlyarevich.winterframework.beans.factory.SimpleBeanFactory@61832929 is here
+Context is closed
+```
+
+## Bean lifecycle
+
+
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+This project is just my research based on [this article](https://habr.com/ru/post/419679/). No any specific rules of contribution needed.
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+**Vladislav Sidlyarevich** - [Github profile](https://github.com/vlsidlyarevich)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
-
+This project is licensed under the Apache 2.0 License - see the [LICENSE.md](LICENSE.md) file for details
