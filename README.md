@@ -1,10 +1,17 @@
 # Winter Framework
 
-My tryout to create simplified version of Spring Framework core which supports following:
+My tryout to create simplified version of Spring Framework core for **EDUCATIONAL PURPOSES ONLY**.
+
+## Supported features
 
 * Classpath scanning for components
 * Multi-staged constructor for components
-* 
+* Field or setter based dependency injection
+* Aware callbacks: `BeanNameAware`, `BeanFactoryAware`
+* Bean post processors support, with post processing before and after initialization
+* Javax bean lifecycle annotations support: `@PostConstruct`, `@PreDestroy`
+* `InitializingBean` and `DisposableBean` callbacks
+* Application event listening
 
 ## Getting Started
 
@@ -40,7 +47,7 @@ Also he demonstrates the setter-based injection (see TODO)
 which is annotated with `@Component` thus managed by container and implements two callbacks - [InitializingBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/beans/factory/InitializingBean.java)
 and [ApplicationEventListener.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/context/ApplicationEventListener.java).
 Also he has property-based injection, and `@PostConstruct` lifecycle callback.
-* 
+* []
 
 []
 
