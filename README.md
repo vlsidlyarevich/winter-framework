@@ -43,7 +43,7 @@ Several services created fot testing purposes:
 
 * [ServiceBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/test/ServiceBean.java)
 which is managed by container and implements [BeanNameAware.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/beans/factory/BeanNameAware.java) callback. 
-Also he demonstrates the setter-based injection (see TODO)
+Also he demonstrates the setter-based injection
 * [AnotherServiceBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/test/AnotherServiceBean.java)
 which is managed by container and implements two callbacks - [InitializingBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/beans/factory/InitializingBean.java)
 and [ApplicationEventListener.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/context/ApplicationEventListener.java).
@@ -67,8 +67,9 @@ Context is closed
 
 ## Bean lifecycle
 
+Framework supports following bean lifecycle:
 
-
+![Bean lifecycle](https://github.com/vlsidlyarevich/winter-framework/blob/assets/Spring-Bean-Life-Cycle.jpg?raw=true)
 
 ## Contributing
 
