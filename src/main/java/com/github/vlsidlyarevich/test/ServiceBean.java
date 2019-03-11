@@ -1,6 +1,6 @@
 package com.github.vlsidlyarevich.test;
 
-import com.github.vlsidlyarevich.test.repository.FirstRepositoryBean;
+import com.github.vlsidlyarevich.test.repository.SimpleRepositoryBean;
 import com.github.vlsidlyarevich.winterframework.beans.factory.BeanNameAware;
 import com.github.vlsidlyarevich.winterframework.beans.factory.annotation.Autowired;
 import com.github.vlsidlyarevich.winterframework.stereotype.Component;
@@ -10,19 +10,19 @@ import com.github.vlsidlyarevich.winterframework.stereotype.Component;
  * Demonstrates the Setter-based injection, and {@link BeanNameAware} callback functionality.
  *
  * @see AnotherServiceBean
- * @see FirstRepositoryBean
+ * @see SimpleRepositoryBean
  */
 @Component
 public class ServiceBean implements BeanNameAware {
 
     private String beanName;
-    private FirstRepositoryBean repositoryBean;
+    private SimpleRepositoryBean repositoryBean;
 
     /**
      * Call service and repo.
      */
     public void callServiceAndRepo() {
-        System.out.println(beanName + " is called");
+        System.out.println(this.getClass().getSimpleName() + " is called");
         this.repositoryBean.callRepoMethod();
     }
 
@@ -32,7 +32,7 @@ public class ServiceBean implements BeanNameAware {
      * @param repositoryBean the repository bean
      */
     @Autowired
-    public void setRepositoryBean(final FirstRepositoryBean repositoryBean) {
+    public void setRepositoryBean(final SimpleRepositoryBean repositoryBean) {
         this.repositoryBean = repositoryBean;
     }
 
@@ -41,7 +41,7 @@ public class ServiceBean implements BeanNameAware {
      *
      * @return the repository bean
      */
-    public FirstRepositoryBean getRepositoryBean() {
+    public SimpleRepositoryBean getRepositoryBean() {
         return repositoryBean;
     }
 

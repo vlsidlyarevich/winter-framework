@@ -47,10 +47,10 @@ Also he demonstrates the setter-based injection
 * [AnotherServiceBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/test/AnotherServiceBean.java)
 which is managed by container and implements two callbacks - [InitializingBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/beans/factory/InitializingBean.java)
 and [ApplicationEventListener.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/context/ApplicationEventListener.java).
-Also he has property-based injection, and `@PostConstruct` lifecycle callback.
+Also he has property-based injection.
 * [FirstRepositoryBean.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/test/repository/FirstRepositoryBean.java)
 which is managed by container and implements [BeanFactoryAware.java](https://github.com/vlsidlyarevich/winter-framework/blob/master/src/main/java/com/github/vlsidlyarevich/winterframework/beans/factory/BeanFactoryAware.java)
-callback
+callback and `@PostConstruct` lifecycle callback
 
 These testing classes are designed to demonstrate all features and provide following console output:
 ```
