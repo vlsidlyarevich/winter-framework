@@ -3,7 +3,7 @@ package com.github.vlsidlyarevich.winterframework.beans.factory;
 import com.github.vlsidlyarevich.javax.annotation.PreDestroy;
 import com.github.vlsidlyarevich.winterframework.beans.factory.annotation.Autowired;
 import com.github.vlsidlyarevich.winterframework.beans.factory.config.BeanPostProcessor;
-import com.github.vlsidlyarevich.winterframework.beans.factory.support.ClassNameUtils;
+import com.github.vlsidlyarevich.winterframework.beans.factory.support.BeanClassNameUtils;
 import com.github.vlsidlyarevich.winterframework.beans.factory.support.ClassScanException;
 import com.github.vlsidlyarevich.winterframework.beans.factory.support.PathScanningClassesProvider;
 import com.github.vlsidlyarevich.winterframework.stereotype.Component;
@@ -38,7 +38,7 @@ public class SimpleBeanFactory implements StageAwareBeanFactory {
                 if (clazz.isAnnotationPresent(Component.class) || clazz.isAnnotationPresent(Repository.class)) {
                     try {
                         Object instance = clazz.getDeclaredConstructor().newInstance();
-                        this.singletons.put(ClassNameUtils.convertToBeanName(clazz.getSimpleName()), instance);
+                        this.singletons.put(BeanClassNameUtils.convertToBeanName(clazz.getSimpleName()), instance);
                         this.singletonClasses.put(clazz, instance);
                     } catch (ReflectiveOperationException e) {
                         throw new BeanCreationException(e);

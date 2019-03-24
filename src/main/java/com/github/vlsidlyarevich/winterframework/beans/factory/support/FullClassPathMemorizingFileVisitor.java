@@ -9,11 +9,19 @@ import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * {@link SimpleFileVisitor} implementation to store full class paths.
+ */
 public class FullClassPathMemorizingFileVisitor extends SimpleFileVisitor<Path> {
 
     private final String basePackage;
     private final List<String> fullClassPaths;
 
+    /**
+     * Instantiates a new Full class path memorizing file visitor.
+     *
+     * @param basePackage the base package
+     */
     public FullClassPathMemorizingFileVisitor(final String basePackage) {
         super();
         this.fullClassPaths = new ArrayList<>();
@@ -37,6 +45,11 @@ public class FullClassPathMemorizingFileVisitor extends SimpleFileVisitor<Path> 
         return FileVisitResult.CONTINUE;
     }
 
+    /**
+     * Get full class paths.
+     *
+     * @return the full class paths
+     */
     public List<String> getFullClassPaths() {
         return fullClassPaths;
     }

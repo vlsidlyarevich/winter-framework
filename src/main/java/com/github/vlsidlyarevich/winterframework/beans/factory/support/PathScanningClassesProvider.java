@@ -8,8 +8,17 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class scanner, which can find java classes by system path.
+ */
 public class PathScanningClassesProvider {
 
+    /**
+     * Provide classes for path.
+     *
+     * @param path the path
+     * @return the list
+     */
     public List<Class<?>> provideClassesForPath(final String path) {
         final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         final List<Class<?>> result = new ArrayList<>();
@@ -37,7 +46,7 @@ public class PathScanningClassesProvider {
     }
 
     private String convertPathForClassFetch(final String fullClassPath) {
-        String pathWithoutPostfix = ClassNameUtils.removePostfix(fullClassPath);
-        return ClassNameUtils.convertToPackagedPath(pathWithoutPostfix);
+        String pathWithoutPostfix = BeanClassNameUtils.removePostfix(fullClassPath);
+        return BeanClassNameUtils.convertToPackagedPath(pathWithoutPostfix);
     }
 }

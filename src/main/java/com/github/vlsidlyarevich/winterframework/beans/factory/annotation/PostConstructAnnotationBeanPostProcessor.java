@@ -8,6 +8,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+/**
+ * {@link BeanPostProcessor} implementation for {@link PostConstruct} annotation support.
+ * Scans bean class methods and invokes annotated methods.
+ *
+ * @see PostConstruct
+ * @see BeanPostProcessor
+ */
 public class PostConstructAnnotationBeanPostProcessor implements BeanPostProcessor {
 
     @Override
